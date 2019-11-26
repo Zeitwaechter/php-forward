@@ -78,7 +78,9 @@
             </p>--}}
 
             <p>
-                @if(0 < strlen($route))
+                @if(env('APP_RESEARCH_DONE'))
+                    Diese Aktion ist bereits abgelaufen.
+                @elseif(0 < strlen($route) && env('APP_RESEARCH_DONE'))
                     Sie werden nachfolgend in 5 Sekunden weitergeleitet..
                 @else
                     Weiterleitung nicht möglich<br />(ID Parameter in der URI fehlt)..
@@ -87,13 +89,13 @@
 
         </div>
 
-        @if(0 < strlen($route))
+        @if(0 < strlen($route) && !env('APP_RESEARCH_DONE'))
             {{--<p>({{ __('strings.welcome.forward_to', $route ) }})</p>--}}
             <p>(Weiterleitung nach {{ $route }})</p>
         @endif
     </div>
 </div>
-@if(0 < strlen($route))
+@if(0 < strlen($route) && !env('APP_RESEARCH_DONE'))
     <script>
       document.onreadystatechange = function () {
         if (document.readyState === "complete") {
